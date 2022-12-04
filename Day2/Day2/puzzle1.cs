@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Day2;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace puzzle1 
@@ -28,8 +29,8 @@ namespace puzzle1
     What would your total score be if everything goes exactly according to your strategy guide?*/
         static void Main(string[] args)
         {
-            string puzzleData = File.ReadAllText("puzzleData.txt");
-            List<string> matches = puzzleData.Split("\r\n").ToList();
+            string puzzleData = File.ReadAllText("puzzleData.txt").Replace(" ","");
+            string[] matches = puzzleData.Split("\r\n");
             int totalScore = 0;
             calculate calculate=new calculate();
             foreach (string match in matches)
@@ -37,6 +38,8 @@ namespace puzzle1
                 totalScore += calculate.calculatematch(match.ToUpper());
             }
             Console.WriteLine("The total score of the matches was: " + totalScore);
+            puzzle2 puzzle2= new puzzle2();
+            puzzle2.main();
         }
     }
     class calculate 
@@ -44,43 +47,43 @@ namespace puzzle1
         internal int calculatematch(string matchData)
         {
             char[] weapon = matchData.ToCharArray();
-            if (weapon[0] == 'A' && weapon[2] == 'X')
+            if (weapon[0] == 'A' && weapon[1] == 'X')
             {
                 return 4;
             }
-            else if (weapon[0] == 'A' && weapon[2] == 'Y')
+            else if (weapon[0] == 'A' && weapon[1] == 'Y')
             {
                 return 8;
             }
-            else if (weapon[0] == 'A' && weapon[2] == 'Z')
+            else if (weapon[0] == 'A' && weapon[1] == 'Z')
             {
                 return 3;
             }
-            else if (weapon[1] == 'B' && weapon[2] == 'X')
+            else if (weapon[0] == 'B' && weapon[1] == 'X')
             {
                 return 1;
             }
-            else if (weapon[1] == 'B' && weapon[2] == 'Y')
+            else if (weapon[0] == 'B' && weapon[1] == 'Y')
             {
                 return 5;
             }
-            else if (weapon[1] == 'B' && weapon[2] == 'Z')
+            else if (weapon[0] == 'B' && weapon[1] == 'Z')
             {
                 return 9;
             }
-            else if (weapon[1] == 'C' && weapon[2] == 'X')
+            else if (weapon[0] == 'C' && weapon[1] == 'X')
             {
                 return 7;
             }
-            else if (weapon[1] == 'C' && weapon[2] == 'Y')
+            else if (weapon[0] == 'C' && weapon[1] == 'Y')
             {
                 return 2;
             }
-            else if (weapon[1] == 'C' && weapon[2] == 'Z')
+            else if (weapon[0] == 'C' && weapon[1] == 'Z')
             {
-                return 3;
+                return 6;
             }
-            return 0;
+            throw new InvalidDataException();
         }
     }
 }
