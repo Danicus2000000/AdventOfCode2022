@@ -43,7 +43,7 @@ namespace Day3
                 string sack3 = rucksacks[i+2];
                 char[] sack3Raw=sack3.ToCharArray();
                 List<char> oneContains=new List<char>();
-                
+                int highestPriority = 0;
                 foreach(char sackItem in sack2Raw) 
                 {
                     if(sack1.Contains(sackItem)) 
@@ -55,9 +55,14 @@ namespace Day3
                 {
                     if(sack1.Contains(sackItem) && oneContains.Contains(sackItem)) 
                     {
-                        totalPriorityCount += getLetterValue(sackItem);
+                        int cur= getLetterValue(sackItem);
+                        if (cur > highestPriority) 
+                        {
+                            highestPriority = cur;
+                        }
                     }
                 }
+                totalPriorityCount += highestPriority;
                 
             }
             Console.WriteLine("Total badge priority count: " + totalPriorityCount);
