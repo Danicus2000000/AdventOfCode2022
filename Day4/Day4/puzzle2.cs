@@ -50,7 +50,7 @@ namespace Day4
                         break;
                     }
                 }
-                if(notSolved)
+                if(!notSolved)
                 {
                     foreach (int areaID in elfPair[1])
                     {
