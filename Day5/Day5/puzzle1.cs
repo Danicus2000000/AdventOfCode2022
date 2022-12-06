@@ -108,9 +108,14 @@ foreach(string instruction in rawPuzzleLines)
     int quantity = trueRequirments[0];
     int from = trueRequirments[1]-1;
     int to = trueRequirments[2]-1;
+    Stack<char> temp = new Stack<char>();
     for(int i = 0; i < quantity; i++) 
     {
-        crates[to].Push(crates[from].Pop());
+        temp.Push(crates[from].Pop());
+    }
+    foreach(char crate in temp) 
+    {
+        crates[to].Push(temp.Pop());
     }
 }
 Console.WriteLine("Crates on top in order: " + crates[0].Last()+" "+ crates[1].Last() + " " + crates[2].Last() + " " + crates[3].Last() + " " + crates[4].Last() + " " + crates[5].Last() + " " + crates[6].Last() + " " + crates[7].Last() + " " + crates[8].Last() + " ");
