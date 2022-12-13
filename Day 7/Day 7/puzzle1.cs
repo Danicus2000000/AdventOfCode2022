@@ -1,5 +1,4 @@
 ﻿using Day_7;
-
 string data = File.ReadAllText("puzzleData.txt");//gets text file data
 string[] consoleLines = data.Split("\r\n");//splits input by line
 Dictionary<string, int> directorySizes = new Dictionary<string, int>();//creates dictionary lookup of addresses to size
@@ -24,7 +23,7 @@ for (int i=0;i<consoleLines.Length;i++) //loops through all instructions
         {
             curDirectory += consoleLines[i].Replace("$ cd ", "")+"/";
         }
-        if (consoleLines[i].Contains("ls"))//if we want to list files in curent directory
+        if (consoleLines[i].Contains("ls") && !directorySizes.ContainsKey(curDirectory))//if we want to list files in curent directory and we havent done so already
         {
             for(int j = i + 1;j!=consoleLines.Length && !consoleLines[j].Contains("$");j++)//loop through lines until the next command or hit end of console lines
             {
