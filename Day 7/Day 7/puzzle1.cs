@@ -1,73 +1,68 @@
-﻿using Day_7;
-string data = File.ReadAllText("puzzleData.txt");//gets text file data
-string[] consoleLines = data.Split("\r\n");//splits input by line
-Dictionary<string, int> directorySizes = new Dictionary<string, int>();//creates dictionary lookup of addresses to size
-string curDirectory = "";
-for (int i=0;i<consoleLines.Length;i++) //loops through all instructions
+﻿namespace Day_7
 {
-    if (consoleLines[i].Contains("$"))//if it is a command
+    internal static class puzzle1
     {
-        if (consoleLines[i].Contains("cd /"))//go to base directory
+        public static void main(string puzzleData) 
         {
-            curDirectory = "/";
-        }
-        else if (consoleLines[i].Contains("cd .."))//go back a directory if we are not in base directory
-        {
-            if (curDirectory != "/")
+            string[] commandLines=puzzleData.Split("\r\n");
+            dirNode node = new();
+            dirNode currentnode = node;
+            foreach (string line in commandLines)
             {
-                string replace = curDirectory.Split("/")[curDirectory.Split("/").Length - 2] + "/";
-                curDirectory = curDirectory.Replace(replace, "");
-            }
-        }
-        else if (consoleLines[i].Contains("cd")) //go to specific directory
-        {
-            curDirectory += consoleLines[i].Replace("$ cd ", "")+"/";
-        }
-        if (consoleLines[i].Contains("ls") && !directorySizes.ContainsKey(curDirectory))//if we want to list files in curent directory and we havent done so already
-        {
-            for(int j = i + 1;j!=consoleLines.Length && !consoleLines[j].Contains("$");j++)//loop through lines until the next command or hit end of console lines
-            {
-                if (consoleLines[j].Contains("dir"))//if a directory is found do nothing
+                if (line.First() == '$')//if it is a command
                 {
-                    //nothing to see here
-                }
-                else//increments size of current directory if it exists otherwise adds it
-                {
-                    int size = Convert.ToInt32(consoleLines[j].Split(" ")[0]);
-                    string filename = consoleLines[j].Split(" ")[1];
-                    if (directorySizes.ContainsKey(curDirectory))
+                    if (line.Contains("cd /"))//go to base directory
                     {
-                        directorySizes[curDirectory] += size;
+                        currentnode = node;
+                        continue;
                     }
-                    else 
+                    else if (line.Contains("cd .."))//go back a directory if we are not in base directory
                     {
-                        directorySizes.Add(curDirectory, size);
+                        if (currentnode.parent is not null)
+                        {
+                            currentnode = currentnode.parent;
+                        }
+                        continue;
+                    }
+                    else if (line.Contains("cd")) //go to specific directory
+                    {
+                        currentnode = currentnode.children.Find(childNode => childNode.fileName == line.Split(" ")[^1]);
+                        continue;
+                    }
+                    else//if ls continue
+                    {
+                        continue;
                     }
                 }
+                string[] lineSplit = line.Split(" ");//if ls has been used and file and dirs are present add them as children
+                if (lineSplit[0] == "dir")
+                {
+                    currentnode.addChild(new dirNode(lineSplit[^1], currentnode));
+                }
+                else
+                {
+                    currentnode.addChild(new dirNode(lineSplit[^1], int.Parse(lineSplit[0]), currentnode));
+                }
             }
+            Queue<dirNode> unExplored=new Queue<dirNode>();//explore children and calculate total of all files less than or equal to 100000
+            unExplored.Enqueue(node);
+            int totalSize = 0;
+            while(unExplored.Count > 0) 
+            {
+                dirNode nodeSizeCheck=unExplored.Dequeue();
+                if (nodeSizeCheck.size <= 100000) 
+                {
+                    totalSize+=nodeSizeCheck.size;
+                }
+                foreach (dirNode enququeNode in nodeSizeCheck.children) 
+                {
+                    if (enququeNode.isDir) 
+                    {
+                        unExplored.Enqueue(enququeNode);
+                    }
+                }
+            }
+            Console.WriteLine("Total size of directories less than or equal to 100000: " + totalSize);
         }
     }
 }
-for (int i = 0; i < directorySizes.Count; i++)//adds sub directories to parent directories counter
-{
-    for (int j = 0; j < directorySizes.Count; j++)
-    {
-        if (i != j && directorySizes.ElementAt(j).Key.Contains(directorySizes.ElementAt(i).Key))
-        {
-            directorySizes[directorySizes.ElementAt(i).Key] += directorySizes.ElementAt(j).Value;
-        }
-    }
-}
-int totalSum = 0;
-Console.WriteLine("The directories less than 100000:");
-foreach (KeyValuePair<string,int> value in directorySizes) //print out all directories values
-{
-    if (value.Value <= 100000)
-    {
-        Console.WriteLine(value.Key + ": " + value.Value);
-        totalSum += value.Value;
-    }
-}
-Console.WriteLine("The sum of those directories: " + totalSum);
-puzzle2 puz = new puzzle2();
-puz.main();
