@@ -27,9 +27,123 @@ namespace Day_12
 {
     internal static class puzzle1
     {
-        public static void main(string puzzleData) 
+        internal static void main(string puzzleData) 
         {
-
+            string[] mapLines=puzzleData.Split("\r\n");
+            List<List<char>> map=new List<List<char>>();
+            int myI = 0;
+            int myJ = 0;
+            int targetI = 0;
+            int targetJ = 0;
+            for(int i= 0;i<mapLines.Length;i++) //populate map list and gets relative positions
+            {
+                List<char> line=new List<char>();
+                for(int j = 0; j < mapLines[i].Length;j++) 
+                {
+                    line.Add(mapLines[i][j]);
+                    if (mapLines[i][j] == 'S') 
+                    {
+                        myI = i;
+                        myJ=j;
+                    }
+                    if (mapLines[i][j] == 'E') 
+                    {
+                        targetI = i;
+                        targetJ=j;
+                    }
+                }
+                map.Add(line);
+            }
+            int stepsTaken = 0;
+            while (map[myI][myJ] != 'E')//begin walking to hill 
+            {
+                (myI, myJ) = getBestStep(map, myI, myJ, targetI, targetJ);
+                stepsTaken++;
+            }
+            Console.WriteLine("It took us " + stepsTaken + " to finish!");//outputs walk distance
+        }
+        internal static int getLetterValue(char letter) 
+        {
+            return ((int)letter)-96;
+        }
+        internal static (int, int) getBestStep(List<List<char>> map, int myI, int myJ, int targetI, int targetJ)//attempts to calculate best move ahead
+        {
+            int nextI = myI;
+            int nextJ = myJ;
+            int myDistanceFrom=(targetJ-myJ)+(targetI-myI);
+            int bestDistanceFrom = myDistanceFrom;
+            int bestI = myI;
+            int bestJ= myJ;
+            char letterOn;
+            if (map[myI][myJ] == 'S')
+            {
+                letterOn = 'a';
+            }
+            else if (map[myI][myJ] == 'E')
+            {
+                letterOn = 'z';
+            }
+            else 
+            {
+                letterOn = map[myI][myJ];
+            }
+            if (myI != 0)
+            {
+                nextI= myI-1;
+                nextJ= myJ;
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1) 
+                {
+                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ)) 
+                    {
+                        bestDistanceFrom= myDistanceFrom;
+                        bestJ= myJ;
+                        bestI = myI;
+                    }
+                }
+            }
+            if (myI != map.Count)
+            {
+                nextI= myI+1;
+                nextJ= myJ;
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                {
+                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    {
+                        bestDistanceFrom = myDistanceFrom;
+                        bestJ = myJ;
+                        bestI = myI;
+                    }
+                }
+            }
+            if (myJ != 0)
+            {
+                nextI = myI;
+                nextJ= myJ-1;
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                {
+                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    {
+                        bestDistanceFrom = myDistanceFrom;
+                        bestJ = myJ;
+                        bestI = myI;
+                    }
+                }
+            }
+            if (myJ != map[myI].Count) 
+            {
+                nextI = myI;
+                nextJ = myJ + 1;
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                {
+                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    {
+                        bestDistanceFrom = myDistanceFrom;
+                        bestJ = myJ;
+                        bestI = myI;
+                    }
+                }
+            }
+            return (bestI, bestJ);
         }
     }
 }
