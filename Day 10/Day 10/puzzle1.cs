@@ -179,7 +179,51 @@ namespace Day_10
     {
         public static void main(string puzzleData) 
         {
-
+            string[] cpuLines=puzzleData.Split("\r\n");//gets cpu lines
+            int registerX = 1;//stores register x value
+            int cycle = 1;//stores the current cycle the cpu is on
+            int line = 0;//stores the line of code currently being executed
+            bool isNooping = false;//stores whether the code is doing the noop comand
+            bool isAdding = false;//stores whether an add is in progress
+            int cycleSinceAdd = 0;//stores cycles occured since add started
+            int signalStrength = 0;//stores total signal strength
+            while (cpuLines.Length !=line)//while the cpu has instructions
+            {
+                if (!isNooping && !isAdding)//if we are not doing a command
+                {
+                    string[] instructionParts = cpuLines[line].Split(" ");//get the next one
+                    if (instructionParts[0] == "noop")
+                    {
+                        isNooping = true;
+                    }
+                    else 
+                    {
+                        isAdding = true;
+                    }
+                }
+                if (cycle == 20 || cycle == 60 || cycle == 100 || cycle == 140 || cycle == 180 || cycle == 220) //if we hit a milestone cycle add to signal strength
+                {
+                    signalStrength += cycle * registerX;
+                }
+                cycle++;//increment cycle and perform instruction progress checks at end of cycle
+                if (isNooping)//if we are nooping noop finishes in one cycle so completes imedietly
+                {
+                    isNooping = false;
+                    line++;
+                }
+                else if (isAdding)//if we are adding adding completes in 2 cycles so completes after another loop
+                {
+                    cycleSinceAdd++;
+                    if (cycleSinceAdd == 2)//if add complete
+                    {
+                        cycleSinceAdd = 0;//reset add
+                        isAdding = false;
+                        registerX += int.Parse(cpuLines[line].Split(" ")[1]);//add value requested to register
+                        line++;//perform next line
+                    }
+                }
+            }
+            Console.WriteLine("The sum of signal strengths is: " + signalStrength);//output result
         }
     }
 }
