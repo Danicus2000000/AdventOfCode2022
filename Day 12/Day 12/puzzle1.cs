@@ -91,7 +91,7 @@ namespace Day_12
             {
                 nextI= myI-1;
                 nextJ= myJ;
-                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1) 
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn)-1 == getLetterValue(map[nextI][nextJ])|| getLetterValue(letterOn)+1 == getLetterValue(map[nextI][nextJ])) 
                 {
                     int targetGrab = 0;
                     if (targetI > nextI)
@@ -122,7 +122,7 @@ namespace Day_12
             {
                 nextI= myI+1;
                 nextJ= myJ;
-                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn)-1 == getLetterValue(map[nextI][nextJ])|| getLetterValue(letterOn)+1 == getLetterValue(map[nextI][nextJ]))
                 {
                     int targetGrab = 0;
                     if (targetI > nextI)
@@ -153,7 +153,7 @@ namespace Day_12
             {
                 nextI = myI;
                 nextJ= myJ-1;
-                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn)-1 == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn)+1 == getLetterValue(map[nextI][nextJ]))
                 {
                     int targetGrab = 0;
                     if (targetI > nextI)
@@ -184,7 +184,7 @@ namespace Day_12
             {
                 nextI = myI;
                 nextJ = myJ + 1;
-                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
+                if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) - 1 == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) + 1 == getLetterValue(map[nextI][nextJ]))
                 {
                     int targetGrab = 0;
                     if (targetI > nextI)
