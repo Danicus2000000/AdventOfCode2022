@@ -93,11 +93,28 @@ namespace Day_12
                 nextJ= myJ;
                 if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1) 
                 {
-                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ)) 
+                    int targetGrab = 0;
+                    if (targetI > nextI)
+                    {
+                        targetGrab += targetI - nextI;
+                    }
+                    else 
+                    {
+                        targetGrab += nextI - targetI;
+                    }
+                    if (targetJ > nextJ)
+                    {
+                        targetGrab += targetJ - nextJ;
+                    }
+                    else 
+                    {
+                        targetGrab += nextJ - targetJ;
+                    }
+                    if (bestDistanceFrom > targetGrab) 
                     {
                         bestDistanceFrom= myDistanceFrom;
-                        bestJ= myJ;
-                        bestI = myI;
+                        bestJ = nextJ;
+                        bestI = nextI;
                     }
                 }
             }
@@ -107,11 +124,28 @@ namespace Day_12
                 nextJ= myJ;
                 if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
                 {
-                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    int targetGrab = 0;
+                    if (targetI > nextI)
+                    {
+                        targetGrab += targetI - nextI;
+                    }
+                    else
+                    {
+                        targetGrab += nextI - targetI;
+                    }
+                    if (targetJ > nextJ)
+                    {
+                        targetGrab += targetJ - nextJ;
+                    }
+                    else
+                    {
+                        targetGrab += nextJ - targetJ;
+                    }
+                    if (bestDistanceFrom > targetGrab)
                     {
                         bestDistanceFrom = myDistanceFrom;
-                        bestJ = myJ;
-                        bestI = myI;
+                        bestJ = nextJ;
+                        bestI = nextI;
                     }
                 }
             }
@@ -121,11 +155,28 @@ namespace Day_12
                 nextJ= myJ-1;
                 if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
                 {
-                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    int targetGrab = 0;
+                    if (targetI > nextI)
+                    {
+                        targetGrab += targetI - nextI;
+                    }
+                    else
+                    {
+                        targetGrab += nextI - targetI;
+                    }
+                    if (targetJ > nextJ)
+                    {
+                        targetGrab += targetJ - nextJ;
+                    }
+                    else
+                    {
+                        targetGrab += nextJ - targetJ;
+                    }
+                    if (bestDistanceFrom > targetGrab)
                     {
                         bestDistanceFrom = myDistanceFrom;
-                        bestJ = myJ;
-                        bestI = myI;
+                        bestJ = nextJ;
+                        bestI = nextI;
                     }
                 }
             }
@@ -135,11 +186,28 @@ namespace Day_12
                 nextJ = myJ + 1;
                 if (getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) - 1 || getLetterValue(letterOn) == getLetterValue(map[nextI][nextJ]) + 1)
                 {
-                    if (bestDistanceFrom > (targetI - nextI) + (targetJ - nextJ))
+                    int targetGrab = 0;
+                    if (targetI > nextI)
+                    {
+                        targetGrab += targetI - nextI;
+                    }
+                    else
+                    {
+                        targetGrab += nextI - targetI;
+                    }
+                    if (targetJ > nextJ)
+                    {
+                        targetGrab += targetJ - nextJ;
+                    }
+                    else
+                    {
+                        targetGrab += nextJ - targetJ;
+                    }
+                    if (bestDistanceFrom > targetGrab)
                     {
                         bestDistanceFrom = myDistanceFrom;
-                        bestJ = myJ;
-                        bestI = myI;
+                        bestJ = nextJ;
+                        bestI = nextI;
                     }
                 }
             }
