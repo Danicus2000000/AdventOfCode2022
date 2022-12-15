@@ -192,9 +192,57 @@ namespace Day_14
                 }
             }
             sandGrid[0, 500] = '+';//add sand target point
+            Console.WriteLine("Empty Grid:");
             for(int i=0;i<sandGrid.GetLength(0);i++) //output sand grid
             {
                 for(int j = 0; j < sandGrid.GetLength(1); j++) 
+                {
+                    Console.Write(sandGrid[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+            bool sandHasVoid = false;//generates sand until it starts to fall out
+            int sandYPos = 0;
+            int sandXPos = 500;
+            int sandGenCount = 0;
+            while (!sandHasVoid) 
+            {
+                if (sandYPos + 1 != sandGrid.GetLength(0))
+                {
+                    if (sandGrid[sandYPos + 1, sandXPos] != '#' && sandGrid[sandYPos + 1, sandXPos] != 'O')
+                    {
+                        sandYPos += 1;
+                    }
+                    else if (sandGrid[sandYPos + 1, sandXPos - 1] != '#' && sandGrid[sandYPos + 1, sandXPos - 1] != 'O')
+                    {
+                        sandYPos += 1;
+                        sandXPos -= 1;
+                    }
+                    else if (sandGrid[sandYPos + 1, sandXPos + 1] != '#' && sandGrid[sandYPos + 1, sandXPos + 1] != 'O')
+                    {
+                        sandYPos += 1;
+                        sandXPos += 1;
+                    }
+                    else 
+                    {
+                        sandGrid[sandYPos, sandXPos] = 'O';
+                        sandGenCount++;
+                        sandXPos = 500;
+                        sandYPos = 0;
+                    }
+
+                }
+                else 
+                {
+                    sandHasVoid= true;
+                }
+            }
+            Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount);
+            Console.WriteLine("Grid after sand:");
+            for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
+            {
+                for (int j = 0; j < sandGrid.GetLength(1); j++)
                 {
                     Console.Write(sandGrid[i, j]);
                 }
