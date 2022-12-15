@@ -238,15 +238,15 @@ namespace Day_14
                 }
             }
             Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount);//output ans
-            Console.WriteLine("Grid after sand:");
-            for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
-            {
-                for (int j = 0; j < sandGrid.GetLength(1); j++)
-                {
-                    Console.Write(sandGrid[i, j]);
-                }
-                Console.WriteLine();
-            }
+            //Console.WriteLine("Grid after sand:");
+            //for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
+            //{
+            //    for (int j = 0; j < sandGrid.GetLength(1); j++)
+            //    {
+            //        Console.Write(sandGrid[i, j]);
+            //    }
+            //    Console.WriteLine();
+            //}
         }
     }
 }
