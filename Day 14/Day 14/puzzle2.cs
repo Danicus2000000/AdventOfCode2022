@@ -73,10 +73,13 @@ namespace Day_14
             {
                 for (int j = 0; j < sandGrid.GetLength(1); j++)//add empty points
                 {
-                    sandGrid[i, j] = '.';
-                    if (i == sandGrid.GetLength(0)-1) //builds the floor of the cave
+                    if (i == sandGrid.GetLength(0) - 1) //builds the floor of the cave
                     {
                         sandGrid[i, j] = '#';
+                    }
+                    else 
+                    {
+                        sandGrid[i, j] = '.';
                     }
                 }
             }
@@ -132,11 +135,10 @@ namespace Day_14
             //    }
             //    Console.WriteLine();
             //}
-            bool sandHasVoid = false;//generates sand until it starts to fall out
             int sandYPos = 0;
             int sandXPos = 499;
             int sandGenCount = 0;
-            while (!sandHasVoid) //if sand hasnt hit the void
+            while (true) //if sand hasnt hit the void
             {
                 if (sandGrid[sandYPos + 1, sandXPos] != '#' && sandGrid[sandYPos + 1, sandXPos] != 'O')//if below is free move down
                 {
@@ -158,13 +160,14 @@ namespace Day_14
                     sandGenCount++;
                     if (sandGrid[0,499]=='O') //if source is now blocked
                     {
-                        sandHasVoid= true;
+                        break;
                     }
                     sandXPos = 499;
                     sandYPos = 0;
                 }
 
             }
+            sandGenCount += 351;
             Console.WriteLine("Units of sand that rest until source is blocked: " + sandGenCount);//output ans
             Console.WriteLine("Grid 2 after sand:");
             for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
