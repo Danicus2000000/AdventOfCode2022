@@ -191,20 +191,19 @@ namespace Day_14
                     }
                 }
             }
-            sandGrid[0, 500] = '+';//add sand target point
-            Console.WriteLine("Empty Grid:");
-            for(int i=0;i<sandGrid.GetLength(0);i++) //output sand grid
-            {
-                for(int j = 0; j < sandGrid.GetLength(1); j++) 
-                {
-                    Console.Write(sandGrid[i, j]);
-                }
-                Console.WriteLine();
-            }
-
+            sandGrid[0, 499] = '+';//add sand target point
+            //Console.WriteLine("Empty Grid:");
+            //for(int i=0;i<sandGrid.GetLength(0);i++) //output sand grid
+            //{
+            //    for(int j = 0; j < sandGrid.GetLength(1); j++) 
+            //    {
+            //        Console.Write(sandGrid[i, j]);
+            //    }
+            //    Console.WriteLine();
+            //}
             bool sandHasVoid = false;//generates sand until it starts to fall out
             int sandYPos = 0;
-            int sandXPos = 500;
+            int sandXPos = 499;
             int sandGenCount = 0;
             while (!sandHasVoid) 
             {
@@ -228,7 +227,7 @@ namespace Day_14
                     {
                         sandGrid[sandYPos, sandXPos] = 'O';
                         sandGenCount++;
-                        sandXPos = 500;
+                        sandXPos = 499;
                         sandYPos = 0;
                     }
 
