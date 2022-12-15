@@ -110,7 +110,96 @@ namespace Day_14
     {
         internal static void main(string puzzleData) 
         {
-
+            puzzleData = puzzleData.Replace(" ", "");//gets rid of whitespace
+            string[] rockLines=puzzleData.Split(Environment.NewLine);//splits by newline
+            List<List<(int, int)>> coords = new List<List<(int, int)>>();//stores all coords
+            foreach(string rockLine in rockLines) //loops through lines of rocks
+            {
+                string[] coordSet = rockLine.Split("->");//gets each coord set
+                List<(int, int)> coordSetToAdd = new List<(int, int)>();//stores a line of coord sets
+                foreach(string coord in coordSet) //for each coordinate in the coordset
+                {
+                    string[] xAndY = coord.Split(",");//get the x and ys and add it it to the to add list
+                    coordSetToAdd.Add((int.Parse(xAndY[0]), int.Parse(xAndY[^1])));
+                }
+                coords.Add(coordSetToAdd);//add coord line to coords
+            }
+            int maxXBound = 0;//stores max value found in rocks
+            int maxYBound = 0;
+            for(int i=0;i<coords.Count;i++) //calculate size of the grid we are working with
+            {
+                for (int j = 0; j < coords[i].Count; j++) 
+                {
+                    (int curXBound,int curYBound) = coords[i][j];
+                    if (curXBound > maxXBound) 
+                    {
+                        maxXBound = curXBound;
+                    }
+                    else if(curYBound > maxYBound) 
+                    {
+                        maxYBound = curYBound;
+                    }
+                }
+            }
+            char[,] sandGrid = new char[maxYBound, maxXBound];
+            for (int i = 0; i < sandGrid.GetLength(0); i++) //make grid containing empty points
+            {
+                for (int j = 0; j < sandGrid.GetLength(1); j++) 
+                {
+                    sandGrid[i, j] = '.';
+                }
+            }
+            for (int i = 0; i < coords.Count; i++) //fill grid with # were rock is
+            {
+                for (int j = 0; j < coords[i].Count-1; j++)
+                {
+                    (int rockFromX,int rockFromY) = coords[i][j];
+                    (int rockToX,int rockToY) = coords[i][j+1];
+                    rockFromX -= 1;
+                    rockFromY-= 1;
+                    rockToX -= 1;
+                    rockToY -= 1;
+                    int distanceToCoverX= rockToX - rockFromX;
+                    int distanceToCoverY= rockToY - rockFromY;
+                    if (distanceToCoverX < 0)
+                    {
+                        for (int travelX = rockFromX; travelX > rockFromX+distanceToCoverX; travelX--)
+                        {
+                            sandGrid[rockFromY, travelX] = '#';
+                        }
+                    }
+                    else if (distanceToCoverX > 0)
+                    {
+                        for (int travelX = rockFromX; travelX <= rockFromX+distanceToCoverX; travelX++)
+                        {
+                            sandGrid[rockFromY, travelX] = '#';
+                        }
+                    }
+                    if (distanceToCoverY < 0)
+                    {
+                        for (int travelY = rockFromY; travelY > rockFromY + distanceToCoverY; travelY--)
+                        {
+                            sandGrid[travelY, rockFromX] = '#';
+                        }
+                    }
+                    else if (distanceToCoverY > 0) 
+                    {
+                        for (int travelY = rockFromY; travelY <= rockFromY+distanceToCoverY; travelY++) 
+                        {
+                            sandGrid[travelY, rockFromX] = '#';
+                        }
+                    }
+                }
+            }
+            sandGrid[0, 500] = '+';//add sand target point
+            for(int i=0;i<sandGrid.GetLength(0);i++) //output sand grid
+            {
+                for(int j = 0; j < sandGrid.GetLength(1); j++) 
+                {
+                    Console.Write(sandGrid[i, j]);
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
