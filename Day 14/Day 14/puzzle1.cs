@@ -110,6 +110,8 @@ namespace Day_14
     {
         internal static void main(string puzzleData) 
         {
+            var watch=new System.Diagnostics.Stopwatch();
+            watch.Start();
             puzzleData = puzzleData.Replace(" ", "");//gets rid of whitespace
             string[] rockLines=puzzleData.Split(Environment.NewLine);//splits by newline
             List<List<(int, int)>> coords = new List<List<(int, int)>>();//stores all coords
@@ -237,7 +239,8 @@ namespace Day_14
                     sandHasVoid= true;
                 }
             }
-            Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount);//output ans
+            watch.Stop();
+            Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount+", Calculated in "+watch.ElapsedMilliseconds+"ms");//output ans
             //Console.WriteLine("Grid after sand:");
             //for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
             //{

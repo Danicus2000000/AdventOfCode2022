@@ -37,6 +37,8 @@ namespace Day_14
     {
         internal static void main(string puzzleData) 
         {
+            var watch=new System.Diagnostics.Stopwatch();
+            watch.Start();
             puzzleData = puzzleData.Replace(" ", "");//gets rid of whitespace
             string[] rockLines = puzzleData.Split(Environment.NewLine);//splits by newline
             List<List<(int, int)>> coords = new List<List<(int, int)>>();//stores all coords
@@ -168,16 +170,17 @@ namespace Day_14
 
             }
             sandGenCount += 351;
-            Console.WriteLine("Units of sand that rest until source is blocked: " + sandGenCount);//output ans
-            Console.WriteLine("Grid 2 after sand:");
-            for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
-            {
-                for (int j = 0; j < sandGrid.GetLength(1); j++)
-                {
-                    Console.Write(sandGrid[i, j]);
-                }
-                Console.WriteLine();
-            }
+            watch.Stop();
+            Console.WriteLine("Units of sand that rest until source is blocked: " + sandGenCount+", calculated in "+watch.ElapsedMilliseconds+"ms");//output ans
+            //Console.WriteLine("Grid 2 after sand:");
+            //for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
+            //{
+            //    for (int j = 0; j < sandGrid.GetLength(1); j++)
+            //    {
+            //        Console.Write(sandGrid[i, j]);
+            //    }
+            //    Console.WriteLine();
+            //}
         }
     }
 }
