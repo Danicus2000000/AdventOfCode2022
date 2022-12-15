@@ -163,7 +163,7 @@ namespace Day_14
                     int distanceToCoverY= rockToY - rockFromY;
                     if (distanceToCoverX < 0)
                     {
-                        for (int travelX = rockFromX; travelX > rockFromX+distanceToCoverX; travelX--)
+                        for (int travelX = rockFromX; travelX >= rockFromX+distanceToCoverX; travelX--)
                         {
                             sandGrid[rockFromY, travelX] = '#';
                         }
@@ -177,7 +177,7 @@ namespace Day_14
                     }
                     if (distanceToCoverY < 0)
                     {
-                        for (int travelY = rockFromY; travelY > rockFromY + distanceToCoverY; travelY--)
+                        for (int travelY = rockFromY; travelY >= rockFromY + distanceToCoverY; travelY--)
                         {
                             sandGrid[travelY, rockFromX] = '#';
                         }
@@ -205,25 +205,25 @@ namespace Day_14
             int sandYPos = 0;
             int sandXPos = 499;
             int sandGenCount = 0;
-            while (!sandHasVoid) 
+            while (!sandHasVoid) //if sand hasnt hit the void
             {
-                if (sandYPos + 1 != sandGrid.GetLength(0))
+                if (sandYPos + 1 != sandGrid.GetLength(0))//checks if sand has hit the edge of the game window
                 {
-                    if (sandGrid[sandYPos + 1, sandXPos] != '#' && sandGrid[sandYPos + 1, sandXPos] != 'O')
+                    if (sandGrid[sandYPos + 1, sandXPos] != '#' && sandGrid[sandYPos + 1, sandXPos] != 'O')//if below is free move down
                     {
                         sandYPos += 1;
                     }
-                    else if (sandGrid[sandYPos + 1, sandXPos - 1] != '#' && sandGrid[sandYPos + 1, sandXPos - 1] != 'O')
+                    else if (sandGrid[sandYPos + 1, sandXPos - 1] != '#' && sandGrid[sandYPos + 1, sandXPos - 1] != 'O')//if below is not free but down and left is move there
                     {
                         sandYPos += 1;
                         sandXPos -= 1;
                     }
-                    else if (sandGrid[sandYPos + 1, sandXPos + 1] != '#' && sandGrid[sandYPos + 1, sandXPos + 1] != 'O')
+                    else if (sandGrid[sandYPos + 1, sandXPos + 1] != '#' && sandGrid[sandYPos + 1, sandXPos + 1] != 'O')//if below is not free but down and right is move there
                     {
                         sandYPos += 1;
                         sandXPos += 1;
                     }
-                    else 
+                    else //if the sand is stationary place it down and reset the generator
                     {
                         sandGrid[sandYPos, sandXPos] = 'O';
                         sandGenCount++;
@@ -232,12 +232,12 @@ namespace Day_14
                     }
 
                 }
-                else 
+                else //if it has end sand generation
                 {
                     sandHasVoid= true;
                 }
             }
-            Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount);
+            Console.WriteLine("Units of sand that rest before they begin to enter the void: " + sandGenCount);//output ans
             Console.WriteLine("Grid after sand:");
             for (int i = 0; i < sandGrid.GetLength(0); i++) //output sand grid
             {
