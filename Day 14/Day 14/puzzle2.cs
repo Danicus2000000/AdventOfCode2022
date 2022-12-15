@@ -68,13 +68,13 @@ namespace Day_14
                     }
                 }
             }
-            char[,] sandGrid = new char[maxYBound+2, maxXBound*2];
+            char[,] sandGrid = new char[maxYBound+2, maxXBound*2];//increase width by *2 to fake "infinite floor" and add 2 to bottom to simulate floor person is stood on
             for (int i = 0; i < sandGrid.GetLength(0); i++) //make grid containing empty points
             {
-                for (int j = 0; j < sandGrid.GetLength(1); j++)
+                for (int j = 0; j < sandGrid.GetLength(1); j++)//add empty points
                 {
                     sandGrid[i, j] = '.';
-                    if (i == sandGrid.GetLength(0)-1) //builds the floor
+                    if (i == sandGrid.GetLength(0)-1) //builds the floor of the cave
                     {
                         sandGrid[i, j] = '#';
                     }
@@ -156,7 +156,7 @@ namespace Day_14
                 {
                     sandGrid[sandYPos, sandXPos] = 'O';
                     sandGenCount++;
-                    if (sandYPos == 0 && sandXPos == 499) 
+                    if (sandGrid[0,499]=='O') //if source is now blocked
                     {
                         sandHasVoid= true;
                     }
