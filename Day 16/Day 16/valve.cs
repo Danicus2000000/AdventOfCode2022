@@ -6,6 +6,9 @@
         internal string? mValveName;
         internal bool mIsTurned;
         internal List<valve> mConnectedValves;
+        internal int mPressureReleased;
+        internal int mMinuitesLeft;
+        internal valve? mParent;
         /// <summary>
         /// Creates a valve using its pressure and name
         /// </summary>
@@ -17,6 +20,8 @@
             mValveName = pValveName;
             mIsTurned = false;
             mConnectedValves=new List<valve>();
+            mPressureReleased= 0;
+            mMinuitesLeft = 30;
         }
     }
 }

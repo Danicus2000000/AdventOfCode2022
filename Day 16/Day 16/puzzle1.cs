@@ -140,14 +140,74 @@ namespace Day_16
     {
         internal static void main(string puzzleData) 
         {
-            //var watch=new System.Diagnostics.Stopwatch();
-            //watch.Start();
-            string[] vaulveLines=puzzleData.Split(Environment.NewLine);
-            foreach(string line in vaulveLines) 
+            var watch=new System.Diagnostics.Stopwatch();
+            watch.Start();
+            string[] valveLines=puzzleData.Split(Environment.NewLine);
+            List<valve> valveOptions= new List<valve>();
+            for(int i=0;i<valveLines.Length;i++) //adds valves and their children
             {
-
+                string[] words= valveLines[i].Split(" ");
+                string vaulveName= words[1];//gets values to add new valve
+                int flowRate = int.Parse(words[4].Replace("rate=","").Replace(";",""));
+                valve currentValve = new valve(flowRate, vaulveName);//adds valve
+                valveOptions.Add(currentValve);
+                List<string> tunnelNames=words.Where(word=>char.IsUpper(word,1)).ToList();//gets children valves from list
+                tunnelNames.RemoveAt(0);
+                for (int j = 0; j < tunnelNames.Count; j++)//get pure tunnel names
+                {
+                    tunnelNames[j]=tunnelNames[j].Replace(",", "");
+                    for (int k = 0; k < valveOptions.Count; k++) //populate children of valves
+                    {
+                        if (tunnelNames[j] == valveOptions[k].mValveName) 
+                        {
+                            currentValve.mConnectedValves.Add(valveOptions[k]);
+                            valveOptions[k].mConnectedValves.Add(currentValve);
+                        }
+                    }
+                }
             }
-            //watch.Stop();
+            valveOptions[0].mIsTurned = true;//because first valve is worth zero may as well leave it turned
+            Queue<valve> queue = new Queue<valve>();
+            queue.Enqueue(valveOptions[0]);
+            while(queue.Count > 0) //only checks one path need to allow reset 
+            {
+                valve curValve= queue.Peek();
+                if (curValve.mMinuitesLeft == 0) 
+                {
+                    break;
+                }
+                if (!curValve.mIsTurned)
+                {
+                    curValve.mIsTurned = true;
+                    curValve.mMinuitesLeft--;
+                }
+                else 
+                {
+                    List<valve> toLookNext = curValve.mConnectedValves;
+                    if (curValve.mParent != null && curValve.mIsTurned) 
+                    {
+                        curValve.mPressureReleased=curValve.mParent.mPressureReleased+(curValve.mPressureValue*curValve.mMinuitesLeft);
+                        toLookNext.Remove(curValve.mParent);
+                    }
+                    foreach (valve valve in toLookNext) 
+                    {
+                        valve.mMinuitesLeft = curValve.mMinuitesLeft - 1;
+                        valve.mParent = curValve;
+                        queue.Enqueue(valve);
+                    }
+                    queue.Dequeue();
+                }
+            }
+            watch.Stop();
+            int bestPressure = 0;
+            foreach(valve valve in valveOptions) 
+            {
+                if (valve.mPressureReleased > bestPressure) 
+                {
+                    bestPressure = valve.mPressureReleased;
+                }
+            }
+            Console.WriteLine("we released: "+bestPressure+",Completed in: " + watch.ElapsedMilliseconds + "ms");
         }
     }
 }
