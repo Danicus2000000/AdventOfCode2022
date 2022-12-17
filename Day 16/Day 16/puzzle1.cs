@@ -207,7 +207,7 @@ namespace Day_16
                     bestPressure = valve.mPressureReleased;
                 }
             }
-            Console.WriteLine("we released: "+bestPressure+",Completed in: " + watch.ElapsedMilliseconds + "ms");
+            Console.WriteLine("we released "+bestPressure+" pressure, Completed in: " + watch.ElapsedMilliseconds + "ms");
         }
     }
 }
